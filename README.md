@@ -33,3 +33,22 @@ The `.dc.html` files load `./support.js`, which the canvas runtime provides. The
 ## Next
 
 App mosaic, zigzag features (Posture, Movement, Coaching, Food), FAQ, close, footer. Then port to Next.js on Vercel.
+
+## Run
+
+```bash
+npm install
+npm run dev        # http://localhost:3000
+npm run build && npm start
+```
+
+Deploy: import repo on Vercel, preset **Next.js**, root `./`, defaults.
+
+## Env vars
+
+| Name | Use |
+| --- | --- |
+| `WAITLIST_WEBHOOK_URL` | POST `{ email, source, at }` JSON on each signup. Unset: emails log to Vercel runtime logs only. |
+| `NEXT_PUBLIC_SITE_URL` | Canonical URL for metadata (default `https://humn.app`). |
+
+Kepler Std Display loads from Adobe Fonts kit `jjd4sjm`. Add the production domain to the kit's allowed domains.
