@@ -1,0 +1,31 @@
+.phone{background:linear-gradient(140deg,#5d585a 0%,#2e2a2b 24%,#171415 50%,#3c3738 74%,#1e1b1c 100%);box-shadow:0 0 0 .08em rgba(0,0,0,.6),inset 0 .12em .12em rgba(255,255,255,.3),inset 0 -.12em .12em rgba(0,0,0,.5),0 5em 8em -3em rgba(0,0,0,.75),0 1.5em 3em -1.5em rgba(0,0,0,.55)}
+.ph-btn{background:linear-gradient(90deg,#171415,#4a4547)}.ph-btn.r1{background:linear-gradient(270deg,#171415,#4a4547)}
+.ph-bz{background:#000;box-shadow:inset 0 0 0 .1em rgba(255,255,255,.1)}
+.ph-sc{background:radial-gradient(95% 42% at 50% 108%,rgba(174,52,67,.32),rgba(174,52,67,0) 72%),#12060A;color:#F7F5F2}
+.st-r svg{fill:#F7F5F2}.st-r .bo{fill:none;stroke:#F7F5F2;stroke-opacity:.45}
+.ph-hd{background:#12060A;border-bottom-color:rgba(247,245,242,.08)}
+.ch{stroke:#E58A86}
+.hd-s{color:rgba(247,245,242,.55)}.hd-s i{background:#E58A86}
+.hd-r{background:rgba(247,245,242,.08)}
+.av{box-shadow:inset 0 0 0 .1em rgba(255,255,255,.2),0 .5em 1.2em -.4em rgba(174,52,67,.6)}
+.ph-feed::before{background:linear-gradient(180deg,#12060A 0,rgba(18,6,10,0))}
+.ts,.meta{color:rgba(247,245,242,.45)}
+.bub{background:rgba(247,245,242,.09);color:#F7F5F2;box-shadow:inset 0 .1em 0 rgba(255,255,255,.08),0 .9em 1.6em -1.2em rgba(0,0,0,.6)}
+.tp i{background:rgba(247,245,242,.5)}
+.card{background:linear-gradient(180deg,rgba(247,245,242,.1),rgba(247,245,242,.05));border-color:rgba(247,245,242,.1);box-shadow:inset 0 .1em 0 rgba(255,255,255,.1),0 1.2em 2em -1.4em rgba(0,0,0,.7)}
+.chip{background:rgba(229,138,134,.15);color:#E58A86}
+.rt{stroke:rgba(247,245,242,.1)}.rg{stroke:#E58A86}
+.pc-s,.mc-d,.pc-ax{color:rgba(247,245,242,.5)}
+.sg{stroke:rgba(247,245,242,.12)}.sl{stroke:#E58A86}.sd,.sh{fill:#E58A86}
+.mr>span:first-child{color:rgba(247,245,242,.55)}
+.tk{background:rgba(247,245,242,.1)}
+.tk i{background:linear-gradient(90deg,#AE3443,#E58A86)}
+.lg.done{background:rgba(229,138,134,.14);color:#E58A86}
+.cp-plus{background:rgba(247,245,242,.08)}.pl{stroke:rgba(247,245,242,.7)}
+.cp-box{background:rgba(247,245,242,.06);border-color:rgba(247,245,242,.12)}
+.cp-ph{color:rgba(247,245,242,.4)}
+.cpin.typing .cp-box{border-color:rgba(229,138,134,.6);box-shadow:0 0 0 .3em rgba(229,138,134,.12)}
+.cpin.typing .cp-t::after{background:#E58A86}
+.mic{stroke:rgba(247,245,242,.6)}
+.ph-hi i{background:#F7F5F2;opacity:.8}
+.ph-gl{background:radial-gradient(70% 45% at var(--gx,35%) var(--gy,6%),rgba(255,255,255,.12),rgba(255,255,255,0) 70%)}
