@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
+import "./features.css";
 
 const site = process.env.NEXT_PUBLIC_SITE_URL || "https://humn.app";
 
