@@ -1,110 +1,33 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import PhoneFrame from "./PhoneFrame";
-import { FoodScreen, MovementScreen, PostureScreen, VoiceScreen } from "./FeatureScreens";
+import { useEffect, useRef, type CSSProperties } from "react";
+import { createAura } from "@/lib/aura";
+import { fit, replay, watch } from "@/lib/reveal";
 
-const ITEMS = [
-  {
-    id: "posture",
-    title: "See how you stand.",
-    body: "Take a photo scan from the front and side. HUMN maps your shoulders, spine and hips, then tells you in plain words what’s off and what to do about it.",
-    label: "HUMN posture scan: head sits 12 degrees forward, score 86",
-    Screen: PostureScreen,
-  },
-  {
-    id: "movement",
-    title: "Move in small pieces.",
-    body: "A routine built around your day: desk breaks, mobility, strength. Every session is short, so it fits between meetings, not after them.",
-    label: "HUMN movement plan: three short moves for today",
-    Screen: MovementScreen,
-  },
-  {
-    id: "coaching",
-    title: "Talk to a coach that knows you.",
-    body: "Ask out loud and get answers in real time. Pick a voice assistant for posture, mobility or food, or build your own. Each one knows your scan, your plan and your week.",
-    label: "HUMN voice coach: mobility assistant answering a question",
-    Screen: VoiceScreen,
-  },
-  {
-    id: "food",
-    title: "Photograph lunch. Know what’s missing.",
-    body: "Snap a meal and HUMN logs it, then shows protein, fibre and what to add at your next one.",
-    label: "HUMN meal log: salmon rice bowl with protein, fibre and carbs",
-    Screen: FoodScreen,
-  },
-];
+const HUB = { speed: 0.55, uScale: 0.75, uGrain: 0.02, uBase: "#C24A56", uDeep: "#DB6A72", uCore: "#EB9A93", uHigh: "#F8CFC7", uPull: 0.25, uCalm: -4, uStretch: 1 };
+const COACH = { speed: 0.8, uScale: 0.8, uGrain: 0.03, uBase: "#AE3443", uDeep: "#CF5A62", uCore: "#EB9A93", uHigh: "#F8CFC7", uPull: 0.2, uCalm: -4, uStretch: 1 };
 
-/** Phone shown inside each block on narrow screens. */
-function InlinePhone({ i }: { i: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [on, setOn] = useState(false);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver(([e]) => setOn(e.isIntersecting), { threshold: 0.45 });
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-  const { Screen, label } = ITEMS[i];
-  return (
-    <div className="fx-wrap fx-m" ref={ref}>
-      <PhoneFrame label={label}>
-        <Screen on={on} />
-      </PhoneFrame>
-    </div>
-  );
-}
-
+/** Feature diagram: capture chips wired into an Aura orb, then four feature columns. Click to replay. */
 export default function Features() {
-  const [active, setActive] = useState(0);
-  const blocks = useRef<(HTMLElement | null)[]>([]);
+  const fx = useRef<HTMLElement>(null);
+  const view = useRef<HTMLCanvasElement>(null);
+  const coach = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    const io = new IntersectionObserver(
-      (es) => {
-        for (const e of es) {
-          if (e.isIntersecting) setActive(Number((e.target as HTMLElement).dataset.i));
-        }
-      },
-      { rootMargin: "-50% 0px -50% 0px", threshold: 0 },
-    );
-    blocks.current.forEach((b) => b && io.observe(b));
-    return () => io.disconnect();
+    const el = fx.current;
+    if (!el) return;
+    const stages = [createAura(view.current, () => HUB), createAura(coach.current, () => COACH)];
+    const off = [watch(el, el, "fgo", 0.22), fit(el)];
+    const onClick = () => replay(el, ["fgo"]);
+    el.addEventListener("click", onClick);
+    return () => {
+      stages.forEach((s) => s.stop());
+      off.forEach((f) => f());
+      el.removeEventListener("click", onClick);
+    };
   }, []);
 
   return (
-    <section className="feat" id="features" aria-label="What HUMN does">
-      <div className="feat-grid">
-        <div className="feat-copy">
-          {ITEMS.map((it, i) => (
-            <article
-              key={it.id}
-              id={it.id}
-              ref={(el) => {
-                blocks.current[i] = el;
-              }}
-              data-i={i}
-              className={"feat-block" + (active === i ? " is-on" : "")}
-            >
-              <h2 className="hn-serif feat-h">{it.title}</h2>
-              <p className="hn-ui feat-p">{it.body}</p>
-              <InlinePhone i={i} />
-            </article>
-          ))}
-        </div>
-        <div className="feat-stage">
-          <div className="feat-pin">
-            <div className="fx-wrap">
-              <PhoneFrame label={ITEMS[active].label}>
-                {ITEMS.map((it, i) => (
-                  <it.Screen key={it.id} on={active === i} />
-                ))}
-              </PhoneFrame>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <section className="fx hn-ui" ref={fx} aria-labelledby="fx-h">{" "}<div className="fr">{" "}<div className="fr-top">{" "}<h2 id="fx-h" className="hn-serif fx-h">Scan, speak or snap.<br />HUMN takes it from there.</h2>{" "}<p className="fx-p">Photos, questions and meals all feed one routine that fits your day.</p>{" "}</div>{" "}<div className="chips"><div className="n-chip" style={{"--i":"0"} as CSSProperties}><span className="ct"><svg className="ci" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M208,56H180.28L166.65,35.56A8,8,0,0,0,160,32H96a8,8,0,0,0-6.65,3.56L75.71,56H48A24,24,0,0,0,24,80V192a24,24,0,0,0,24,24H208a24,24,0,0,0,24-24V80A24,24,0,0,0,208,56Zm8,136a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V80a8,8,0,0,1,8-8H80a8,8,0,0,0,6.66-3.56L100.28,48h55.43l13.63,20.44A8,8,0,0,0,176,72h32a8,8,0,0,1,8,8ZM128,88a44,44,0,1,0,44,44A44.05,44.05,0,0,0,128,88Zm0,72a28,28,0,1,1,28-28A28,28,0,0,1,128,160Z" /></svg></span><span>Posture scan</span></div><div className="n-chip" style={{"--i":"1"} as CSSProperties}><span className="ct"><svg className="ci" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M128,176a48.05,48.05,0,0,0,48-48V64a48,48,0,0,0-96,0v64A48.05,48.05,0,0,0,128,176ZM96,64a32,32,0,0,1,64,0v64a32,32,0,0,1-64,0Zm40,143.6V240a8,8,0,0,1-16,0V207.6A80.11,80.11,0,0,1,48,128a8,8,0,0,1,16,0,64,64,0,0,0,128,0,8,8,0,0,1,16,0A80.11,80.11,0,0,1,136,207.6Z" /></svg></span><span>Voice</span></div><div className="n-chip" style={{"--i":"2"} as CSSProperties}><span className="ct"><svg className="ci" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M224,104h-8.37a88,88,0,0,0-175.26,0H32a8,8,0,0,0-8,8,104.35,104.35,0,0,0,56,92.28V208a16,16,0,0,0,16,16h64a16,16,0,0,0,16-16v-3.72A104.35,104.35,0,0,0,232,112,8,8,0,0,0,224,104Zm-24.46,0H148.12a71.84,71.84,0,0,1,41.27-29.57A71.45,71.45,0,0,1,199.54,104ZM173.48,56.23q2.75,2.25,5.27,4.75a87.92,87.92,0,0,0-49.15,43H100.1A72.26,72.26,0,0,1,168,56C169.83,56,171.66,56.09,173.48,56.23ZM128,40a71.87,71.87,0,0,1,19,2.57A88.36,88.36,0,0,0,83.33,104H56.46A72.08,72.08,0,0,1,128,40Zm36.66,152A8,8,0,0,0,160,199.3V208H96v-8.7A8,8,0,0,0,91.34,192a88.29,88.29,0,0,1-51-72H215.63A88.29,88.29,0,0,1,164.66,192Z" /></svg></span><span>Meal photo</span></div></div>{" "}<svg className="wires" viewBox="0 0 1280 780" aria-hidden="true"><defs><mask id="wmk" maskUnits="userSpaceOnUse" x="0" y="0" width="1280" height="780"><path className="wmp" pathLength="1" style={{"--w":"900ms"} as CSSProperties} d="M416 452 V484 a16 16 0 0 0 16 16 H624 a16 16 0 0 1 16 16 V532" /><path className="wmp" pathLength="1" style={{"--w":"900ms"} as CSSProperties} d="M640 452 V532" /><path className="wmp" pathLength="1" style={{"--w":"900ms"} as CSSProperties} d="M864 452 V484 a16 16 0 0 1 -16 16 H656 a16 16 0 0 0 -16 16 V532" /><path className="wmp" pathLength="1" style={{"--w":"1800ms"} as CSSProperties} d="M640 656 V712 H176 a16 16 0 0 0 -16 16 V760" /><path className="wmp" pathLength="1" style={{"--w":"1800ms"} as CSSProperties} d="M640 656 V712 H496 a16 16 0 0 0 -16 16 V760" /><path className="wmp" pathLength="1" style={{"--w":"1800ms"} as CSSProperties} d="M640 656 V712 H784 a16 16 0 0 1 16 16 V760" /><path className="wmp" pathLength="1" style={{"--w":"1800ms"} as CSSProperties} d="M640 656 V712 H1104 a16 16 0 0 1 16 16 V760" /></mask></defs><g mask="url(#wmk)"><path className="wr" d="M416 452 V484 a16 16 0 0 0 16 16 H624 a16 16 0 0 1 16 16 V532" /><path className="wr" d="M640 452 V532" /><path className="wr" d="M864 452 V484 a16 16 0 0 1 -16 16 H656 a16 16 0 0 0 -16 16 V532" /><path className="wr" d="M640 656 V712 H176 a16 16 0 0 0 -16 16 V760" /><path className="wr" d="M640 656 V712 H496 a16 16 0 0 0 -16 16 V760" /><path className="wr" d="M640 656 V712 H784 a16 16 0 0 1 16 16 V760" /><path className="wr" d="M640 656 V712 H1104 a16 16 0 0 1 16 16 V760" /></g><circle className="dp" cx="160" cy="760" r="3.5" /><circle className="dp" cx="480" cy="760" r="3.5" /><circle className="dp" cx="800" cy="760" r="3.5" /><circle className="dp" cx="1120" cy="760" r="3.5" /></svg>{" "}<div className="orb"><canvas ref={view} role="img" aria-label="Slow rose and wine light drifting inside a sphere" className="orb-c"></canvas><span className="orb-h"></span></div>{" "}<div className="cols"><a id="posture" className="col" style={{"--c":"0"} as CSSProperties} href="#posture"><h3 className="hn-serif col-h"><span>Posture</span></h3><p className="col-p">Photo scan of your shoulders, spine and hips, in plain words.</p><div className="pvf"><div className="pv"><div className="pv-h"><b>Posture scan</b><em>Front view</em></div><div className="pv-view pv-ph"><img className="ph-img" src="/posture.webp" alt="" width="560" height="840" /><svg className="ph-ov" viewBox="0 0 1024 1536" aria-hidden="true"><path className="br" d="M180 130 V50 H260 M844 130 V50 H764 M180 650 V730 H260 M844 650 V730 H764" /><line className="plumb" x1="514" y1="30" x2="514" y2="1450" /><g className="lm" style={{"--y":".05"} as CSSProperties}><path className="mesh" d="M512 66 L446 106 L464 113 L472 135 L457 168 L450 194 L512 230 L576 194 L569 168 L550 133 L560 113 L583 106 L512 66 M464 113 L497 137 L512 139 L527 137 L560 113 M472 135 L497 137 M550 133 L527 137 M512 139 L496 176 L512 168 L528 176 L512 139 M496 176 L490 192 L512 196 L534 192 L528 176 M490 192 L450 194 M534 192 L576 194 M512 196 L512 230 M497 137 L496 176 M527 137 L528 176 M457 168 L496 176 M569 168 L528 176 M512 66 L512 139" /><path className="thirds" d="M391 66 L640 66 M391 113 L640 113 M391 176 L640 176 M391 230 L640 230" /><text className="tg" x="644" y="104">a</text><text className="tg" x="644" y="158">b</text><text className="tg" x="644" y="217">c</text><circle className="lm-d fd" cx="472" cy="135" r="3.5" /><circle className="lm-d fd" cx="550" cy="133" r="3.5" /><circle className="lm-d fd" cx="512" cy="168" r="3.5" /><circle className="lm-d fd" cx="512" cy="230" r="3.5" /></g><g className="lm" style={{"--y":".52"} as CSSProperties}><path className="skel" d="M512 274 L514 581 L517 724 M347 347 L512 274 L669 322 M347 347 L347 549 L335 746 M669 322 L664 556 L680 757 M413 724 L517 724 L622 724 M413 724 L424 1042 L448 1360 M622 724 L594 1046 L549 1360" /><circle className="lm-d" cx="347" cy="549" r="7" /><circle className="lm-d" cx="664" cy="556" r="7" /><circle className="lm-d" cx="335" cy="746" r="7" /><circle className="lm-d" cx="680" cy="757" r="7" /><circle className="lm-d" cx="413" cy="724" r="7" /><circle className="lm-d" cx="622" cy="724" r="7" /><circle className="lm-d" cx="424" cy="1042" r="7" /><circle className="lm-d" cx="594" cy="1046" r="7" /><circle className="lm-d" cx="448" cy="1360" r="7" /><circle className="lm-d" cx="549" cy="1360" r="7" /><circle className="lm-d" cx="514" cy="581" r="7" /><circle className="lm-d" cx="512" cy="274" r="7" /></g><g className="lm" style={{"--y":".4"} as CSSProperties}><path className="rf" d="M347 322 L669 322" /><path className="n-sl" d="M347 347 L669 322" /><path className="sl2" d="M318 322 V347 M310 322 H326 M310 347 H326" /><circle className="jd" cx="347" cy="347" r="13" /><circle className="jd" cx="669" cy="322" r="13" /><text className="deg" x="298" y="344" textAnchor="end">1.5 cm</text></g><line className="scan" x1="40" x2="984" y1="0" y2="0" /></svg></div><ul className="pv-find"><li><i></i>Left shoulder 1.5 cm lower</li><li><i className="ok"></i>Hips level</li></ul></div></div></a><a id="movement" className="col" style={{"--c":"1"} as CSSProperties} href="#movement"><h3 className="hn-serif col-h"><span>Movement</span></h3><p className="col-p">Short routines built around your day.</p><div className="pvf"><div className="pv"><div className="pv-h"><b>Today</b><em>13 min</em></div><ul className="pv-mv"><li className="mv n-done"><span className="n-mi"><svg className="mi-i" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z" /></svg></span><span className="mt"><b>Neck release</b><small>2 min</small></span></li><li className="mv now"><span className="n-mi"><svg className="mi-i" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M128,80A32,32,0,1,0,96,48,32,32,0,0,0,128,80Zm0-48a16,16,0,1,1-16,16A16,16,0,0,1,128,32Zm96,72a8,8,0,0,1-8,8H136v26.72l51.15,21.93A8,8,0,0,1,192,168v48a8,8,0,0,1-16,0V173.28l-46.45-19.91L53.35,222a8,8,0,1,1-10.7-11.9L120,140.44V112H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,104Z" /></svg></span><span className="mt"><b>Hip opener</b><small>3 min</small></span></li><li className="mv next"><span className="n-mi"><svg className="mi-i" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M160,40a32,32,0,1,0-32,32A32,32,0,0,0,160,40ZM128,56a16,16,0,1,1,16-16A16,16,0,0,1,128,56ZM231.5,87.71A19.62,19.62,0,0,0,212,72H44a20,20,0,0,0-8.38,38.16l.13,0,50.75,22.35-21,79.72A20,20,0,0,0,102,228.8l26-44.87,26,44.87a20,20,0,0,0,36.4-16.52l-21-79.72,50.75-22.35.13,0A19.64,19.64,0,0,0,231.5,87.71Zm-17.8,7.9-56.93,25.06a8,8,0,0,0-4.51,9.36L175.13,217a7,7,0,0,0,.49,1.35,4,4,0,0,1-5,5.45,4,4,0,0,1-2.25-2.07,6.31,6.31,0,0,0-.34-.63L134.92,164a8,8,0,0,0-13.84,0L88,221.05a6.31,6.31,0,0,0-.34.63,4,4,0,0,1-2.25,2.07,4,4,0,0,1-5-5.45,7,7,0,0,0,.49-1.35L103.74,130a8,8,0,0,0-4.51-9.36L42.3,95.61A4,4,0,0,1,44,88H212a4,4,0,0,1,1.73,7.61Z" /></svg></span><span className="mt"><b>Wall angels</b><small>4 min</small></span></li></ul></div></div></a><a id="coaching" className="col" style={{"--c":"2"} as CSSProperties} href="#coaching"><h3 className="hn-serif col-h"><span>Coaching</span></h3><p className="col-p">Real-time voice assistants that know your week.</p><div className="pvf"><div className="pv"><div className="pv-h"><b>Mobility coach</b><em className="live"><i></i>Live</em></div><div className="co"><div className="co-w co-l"><i style={{"--h":"14px","--d":"0.00s"} as CSSProperties}></i><i style={{"--h":"25px","--d":"0.17s"} as CSSProperties}></i><i style={{"--h":"40px","--d":"0.34s"} as CSSProperties}></i><i style={{"--h":"30px","--d":"0.51s"} as CSSProperties}></i><i style={{"--h":"19px","--d":"0.68s"} as CSSProperties}></i></div><div className="co-o"><span className="co-g"></span><div className="co-b"><canvas ref={coach} aria-hidden="true"></canvas></div></div><div className="co-w co-r"><i style={{"--h":"19px","--d":"0.09s"} as CSSProperties}></i><i style={{"--h":"30px","--d":"0.26s"} as CSSProperties}></i><i style={{"--h":"40px","--d":"0.43s"} as CSSProperties}></i><i style={{"--h":"25px","--d":"0.60s"} as CSSProperties}></i><i style={{"--h":"14px","--d":"0.77s"} as CSSProperties}></i></div></div><p className="pv-a">Stand up. Hands on hips, circle slowly. Ten seconds each way.</p></div></div></a><a id="food" className="col" style={{"--c":"3"} as CSSProperties} href="#food"><h3 className="hn-serif col-h"><span>Food</span></h3><p className="col-p">Photograph a meal and see what is missing.</p><div className="pvf"><div className="pv"><div className="pv-cam pv-fd"><img className="fd-img" src="/food.webp" alt="" width="640" height="432" /><span className="fd-t" style={{"left":"34%","top":"38%"} as CSSProperties}><i></i>Salmon</span><span className="fd-t" style={{"left":"62%","top":"62%"} as CSSProperties}><i></i>Rice</span><span className="fd-t" style={{"left":"66%","top":"18%"} as CSSProperties}><i></i>Avocado</span></div><div className="pv-meal"><b>Salmon rice bowl</b><small>Lunch, 610 kcal</small></div><div className="pv-mac"><div className="n-mr" style={{"--p":"0.8"} as CSSProperties}><span>Protein</span><span className="n-tk"><i></i></span><b>38 g</b></div><div className="n-mr" style={{"--p":"0.32"} as CSSProperties}><span>Fibre</span><span className="n-tk"><i></i></span><b>6 g</b></div></div></div></div></a></div>{" "}</div>{" "}</section>
   );
 }
