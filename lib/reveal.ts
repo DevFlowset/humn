@@ -7,6 +7,9 @@ export function watch(node: Element | null, target: Element | null, cls: string,
     target.classList.add(cls);
     return () => {};
   }
+  // A tall node can never be `th` visible on a short screen (phone landscape), so cap th by what fits.
+  const h = node.getBoundingClientRect().height;
+  if (h > 0) th = Math.min(th, (innerHeight * 0.85) / h);
   const io = new IntersectionObserver(
     (es) => {
       if (es.some((e) => e.intersectionRatio >= th)) {

@@ -3,6 +3,7 @@ import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import "./sections.css";
 import "./close.css";
+import "./compact.css";
 
 const site = process.env.NEXT_PUBLIC_SITE_URL || "https://humn.app";
 

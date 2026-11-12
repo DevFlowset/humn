@@ -17,7 +17,7 @@ export default function Trust() {
     const el = tr.current;
     if (!el) return;
     const aura = createAura(orb.current, () => ORB);
-    const off = [watch(tra.current, el, "tgo", 0.45), watch(row.current, el, "rgo", 0.6), fit(el)];
+    const off = [watch(tra.current, el, "tgo", 0.45), watch(row.current, el, "rgo", 0.6), watch(el.querySelector(".t-pr"), el, "pgo", 0.5), fit(el)];
     return () => {
       aura.stop();
       off.forEach((f) => f());
