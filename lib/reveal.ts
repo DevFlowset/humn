@@ -1,6 +1,6 @@
-/* Scroll-triggered class toggles + click-to-replay, shared by Statement and Features. */
+/* Scroll-triggered class toggles, shared by Statement and Features. */
 
-/** Adds `cls` to `target` once `node` is `th` visible; removes it when fully out of view. Returns a cleanup. */
+/** Adds `cls` to `target` the first time `node` is `th` visible, then stops watching, so the sequence plays once. Returns a cleanup. */
 export function watch(node: Element | null, target: Element | null, cls: string, th: number) {
   if (!node || !target) return () => {};
   if (!("IntersectionObserver" in window)) {
@@ -9,29 +9,19 @@ export function watch(node: Element | null, target: Element | null, cls: string,
   }
   const io = new IntersectionObserver(
     (es) => {
-      const e = es[es.length - 1];
-      if (e.intersectionRatio >= th) target.classList.add(cls);
-      else if (!e.isIntersecting) target.classList.remove(cls);
+      if (es.some((e) => e.intersectionRatio >= th)) {
+        target.classList.add(cls);
+        io.disconnect();
+      }
     },
-    { threshold: [0, th] },
+    { threshold: [th] },
   );
   io.observe(node);
   return () => io.disconnect();
 }
 
-/** Resets `target` (transitions off), then re-adds `cls` on the next paint so the sequence plays again. */
-export function replay(target: HTMLElement, cls: string[]) {
-  target.classList.add("rs");
-  cls.forEach((c) => target.classList.remove(c));
-  void target.offsetWidth;
-  target.classList.remove("rs");
-  requestAnimationFrame(() =>
-    requestAnimationFrame(() => cls.forEach((c) => target.classList.add(c))),
-  );
-}
-
-/** Scales the 1280px canvas down on narrow viewports. Sets --fit on `el` (1 at ≥1320px). */
-export function fit(el: HTMLElement | null, width = 1320) {
+/** Scales the fixed-width design down on narrow viewports. Sets --fit on `el` (1 at ≥ `width` px). */
+export function fit(el: HTMLElement | null, width = 1440) {
   if (!el) return () => {};
   const set = () => el.style.setProperty("--fit", String(Math.min(1, document.documentElement.clientWidth / width)));
   set();

@@ -1,11 +1,10 @@
 /* Statement (day strip) + Features (diagram grid). Ported from the approved Body FINAL board. */
-.st{position:relative;box-sizing:border-box;background:#fff;color:#19090E;padding:180px 0 140px}
+.st{position:relative;z-index:3;box-sizing:border-box;zoom:var(--fit,1);margin-top:-56px;border-radius:56px 56px 0 0;background:#fff;color:#19090E;padding:236px 0 140px}
 .st-in{position:relative;width:1280px;margin:0 auto}
 .st-p{margin:0 auto;text-align:center;max-width:1100px;font-size:72px;font-weight:400;line-height:1.05;letter-spacing:-.04em}
 .st-p2{margin-top:28px;max-width:940px;font-size:64px}
 .st.in .st-p2 .w{opacity:0;transform:translateY(.45em);filter:blur(10px)}
 .st.go .st-p2 .w{opacity:1;transform:none;filter:blur(0)}
-.st.rs *,.fx.rs *{transition:none !important;animation:none !important}
 .dstrip{cursor:pointer}
 .fx:not(.fgo) :is(.fx-h,.fx-p,.n-chip,.orb,.col-h,.col-p,.pvf,.dp){opacity:0}
 .fx .wmp{fill:none;stroke:#fff;stroke-width:10;stroke-dasharray:1;stroke-dashoffset:1}
@@ -33,18 +32,30 @@
 .w.it{font-style:italic}
 .dstrip{position:relative;box-sizing:border-box;width:1280px;height:456px;margin-top:72px;border:1px solid rgba(25,9,14,.12);border-radius:16px;background:#fff;font-family:var(--font-geist-sans),system-ui,sans-serif;overflow:hidden}
 .dcap{position:absolute;left:32px;top:206px;font-size:13px;font-weight:500;letter-spacing:-.01em;color:#AE3443}
-.dsweep{position:absolute;inset:0;clip-path:inset(0 1187.5px 0 0)}
-.dcur{position:absolute;left:92.5px;top:56px;width:1px;height:208px;background:linear-gradient(180deg,rgba(174,52,67,0),#AE3443 18%,#AE3443 82%,rgba(174,52,67,0));box-shadow:0 0 14px 2px rgba(229,138,134,.5);opacity:0;pointer-events:none}
-.st.go .dsweep{clip-path:inset(0 0 0 0);transition:clip-path 3800ms linear 500ms}
-.st.go .dcur{animation:dcur 3800ms linear 500ms both}
-@keyframes dcur{0%{opacity:0;transform:translateX(0)}3%{opacity:1}90%{opacity:1}100%{opacity:0;transform:translateX(1187.5px)}}
+.cr{stroke-dasharray:1;stroke-dashoffset:1}
+.ca,.cf,.cd,.dsb,.dgap,.dlead{opacity:0}
+.cd{transform-box:fill-box;transform-origin:center}
+.dlw{position:absolute;left:0;top:56px;width:1280px;height:130px;pointer-events:none}
+.dlead{position:absolute;left:0;top:0;width:11px;height:11px;border-radius:50%;background:#F8CFC7;border:2px solid #AE3443;box-sizing:border-box;box-shadow:0 0 0 6px rgba(229,138,134,.3);offset-rotate:0deg;offset-distance:0%}
+.st.go .cr{animation:crdraw 3800ms linear 500ms forwards}
+.st.go .dlead{animation:leadgo 3800ms linear 500ms both}
+.st.go .ca{animation:cawash 1500ms cubic-bezier(0.22,1,0.36,1) 3300ms both}
+.st.go .cf{animation:segin 520ms cubic-bezier(0.22,1,0.36,1) calc(var(--t) * 1ms + 250ms) both}
+.st.go .cd{animation:popin 560ms cubic-bezier(0.34,1.56,0.64,1) calc(var(--t) * 1ms + 200ms) both}
+.st.go .dsb,.st.go .dgap{animation:blkin 800ms cubic-bezier(0.22,1,0.36,1) calc(var(--t) * 1ms) both}
+@keyframes crdraw{to{stroke-dashoffset:0}}
+@keyframes leadgo{0%{offset-distance:0%;opacity:0;transform:scale(.3)}4%{opacity:1;transform:none}92%{opacity:1;transform:none}100%{offset-distance:100%;opacity:0;transform:scale(.3)}}
+@keyframes cawash{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes segin{from{opacity:0}to{opacity:1}}
+@keyframes popin{from{opacity:0;transform:scale(.2)}to{opacity:1;transform:none}}
+@keyframes blkin{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:none}}
 .st.go .dg,.st.go .dt,.st.go .dlg,.st.go .dya{opacity:1}
 .st.go .dmk,.st.go .dpl{opacity:1;transform:none}
 .st.go .dpc{transform:none}
 .st.go .dcn{transform:none}
 .st-p2 .w{transition-delay:calc(4300ms + (var(--i) - 13) * 60ms)}
-.dg{position:absolute;top:56px;bottom:56px;width:1px;background:rgba(25,9,14,.07);opacity:0;transition:opacity 600ms cubic-bezier(0.4,0,0.2,1)}
-.dt{position:absolute;bottom:18px;transform:translateX(-50%);font-size:15px;color:rgba(25,9,14,.5);letter-spacing:-.005em;opacity:0;transition:opacity 600ms cubic-bezier(0.4,0,0.2,1)}
+.dg{position:absolute;top:56px;bottom:56px;width:1px;background:rgba(25,9,14,.07);opacity:0;transition:opacity 600ms cubic-bezier(0.4,0,0.2,1) calc(var(--t) * 1ms - 300ms)}
+.dt{position:absolute;bottom:18px;transform:translateX(-50%);font-size:15px;color:rgba(25,9,14,.5);letter-spacing:-.005em;opacity:0;transition:opacity 600ms cubic-bezier(0.4,0,0.2,1) calc(var(--t) * 1ms - 300ms)}
 .dtrack{position:absolute;left:0;top:208px;width:100%;height:56px}
 .dsb{position:absolute;top:0;height:56px;border-radius:10px;overflow:hidden;background:#8E2236;box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
 .dsb canvas{position:absolute;inset:0;display:block;width:100%;height:100%}
@@ -75,12 +86,12 @@
 .dpi{display:grid;place-items:center;width:44px;height:44px;border-radius:10px;background:rgba(174,52,67,.09)}
 .dpi svg{width:24px;height:24px;color:#AE3443}
 .dpt{display:flex;flex-direction:column;gap:1px}.dpt b{font-size:17px;font-weight:500;letter-spacing:-.015em}.dpt small{font-size:14px;color:rgba(25,9,14,.55)}
-@media (prefers-reduced-motion:reduce){.w,.dmk,.dpl,.dpc,.dcn,.dg,.dt,.dlg,.dya{transition:none !important;opacity:1;transform:none;filter:none}.dsweep{clip-path:none !important;transition:none !important}.dcur{display:none}}
+@media (prefers-reduced-motion:reduce){.w,.dmk,.dpl,.dpc,.dcn,.dg,.dt,.dlg,.dya{transition:none !important;opacity:1;transform:none;filter:none}.cr{stroke-dashoffset:0}.ca,.cf,.cd,.dsb,.dgap{opacity:1;animation:none !important}.dlead{display:none}}
 
 .stm{box-sizing:border-box;background:#fff;color:#19090E;padding:200px 24px 120px}
 .stm-p{max-width:1120px;margin:0 auto;font-size:60px;font-weight:400;line-height:1.14;letter-spacing:-.04em;text-wrap:pretty}
 .stm-dim{color:rgba(25,9,14,.52)}
-.fx{box-sizing:border-box;background:#fff;color:#19090E;padding:0 80px 140px;font-family:var(--font-geist-sans),system-ui,sans-serif}
+.fx{box-sizing:border-box;zoom:var(--fit,1);background:#fff;color:#19090E;padding:0 80px 140px;font-family:var(--font-geist-sans),system-ui,sans-serif}
 .fr{position:relative;width:1280px;height:1200px;margin:0 auto;border:1px solid rgba(25,9,14,.12);border-radius:16px;background:#fff;overflow:hidden}
 .fr-top{position:absolute;left:0;right:0;top:104px;text-align:center}
 .fx-h{margin:0;font-size:60px;font-weight:400;line-height:1.04;letter-spacing:-.04em}

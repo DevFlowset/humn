@@ -2,12 +2,12 @@
 
 import { useEffect, useRef, type CSSProperties } from "react";
 import { createAura } from "@/lib/aura";
-import { fit, replay, watch } from "@/lib/reveal";
+import { fit, watch } from "@/lib/reveal";
 
 const HUB = { speed: 0.55, uScale: 0.75, uGrain: 0.02, uBase: "#C24A56", uDeep: "#DB6A72", uCore: "#EB9A93", uHigh: "#F8CFC7", uPull: 0.25, uCalm: -4, uStretch: 1 };
 const COACH = { speed: 0.8, uScale: 0.8, uGrain: 0.03, uBase: "#AE3443", uDeep: "#CF5A62", uCore: "#EB9A93", uHigh: "#F8CFC7", uPull: 0.2, uCalm: -4, uStretch: 1 };
 
-/** Feature diagram: capture chips wired into an Aura orb, then four feature columns. Click to replay. */
+/** Feature diagram: capture chips wired into an Aura orb, then four feature columns. Plays once. */
 export default function Features() {
   const fx = useRef<HTMLElement>(null);
   const view = useRef<HTMLCanvasElement>(null);
@@ -18,12 +18,9 @@ export default function Features() {
     if (!el) return;
     const stages = [createAura(view.current, () => HUB), createAura(coach.current, () => COACH)];
     const off = [watch(el, el, "fgo", 0.22), fit(el)];
-    const onClick = () => replay(el, ["fgo"]);
-    el.addEventListener("click", onClick);
     return () => {
       stages.forEach((s) => s.stop());
       off.forEach((f) => f());
-      el.removeEventListener("click", onClick);
     };
   }, []);
 
