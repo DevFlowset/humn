@@ -193,8 +193,8 @@ export default function Coach() {
             <span className="kc-sig-s">{s.signal.source}</span>
             <b className="hn-display">{s.signal.lines[0]}</b>
             <small>{s.signal.lines[1]}</small>
-            <svg className="kc-wire" viewBox="0 0 120 8" preserveAspectRatio="none" aria-hidden="true">
-              <path d="M0 4H120" />
+            <svg className="kc-wire" aria-hidden="true">
+              <path d="M0 4H1200" />
               <circle r="3" cy="4" />
             </svg>
           </div>
@@ -211,9 +211,10 @@ export default function Coach() {
         >
           <svg className="kc-bezel" viewBox="0 0 760 760" aria-hidden="true">
             {Array.from({ length: 72 }, (_, n) => {
-              const a = (n * 5 * Math.PI) / 180, big = n % 12 === 0;
-              const r1 = big ? 334 : 340, r2 = 352;
-              return <line key={n} className={big ? "tk big" : "tk"} x1={380 + r1 * Math.sin(a)} y1={380 - r1 * Math.cos(a)} x2={380 + r2 * Math.sin(a)} y2={380 - r2 * Math.cos(a)} />;
+              if (n % 12 === 0) return null; // moments sit here
+              const a = (n * 5 * Math.PI) / 180, mid = n % 6 === 0;
+              const r1 = mid ? 338 : 342, r2 = 350;
+              return <line key={n} className={mid ? "tk mid" : "tk"} x1={380 + r1 * Math.sin(a)} y1={380 - r1 * Math.cos(a)} x2={380 + r2 * Math.sin(a)} y2={380 - r2 * Math.cos(a)} />;
             })}
             <circle className="kc-track" cx="380" cy="380" r="362" />
             <circle
@@ -226,14 +227,31 @@ export default function Coach() {
             />
           </svg>
 
-          <div className="kc-rot" ref={rot} role="tablist" aria-label="Moments in a day">
-            {SCENARIOS.map((x, n) => (
+          <div className="kc-disc" aria-hidden="true" />
+          <div
+            className="kc-rot"
+            ref={rot}
+            role="tablist"
+            aria-label="Moments in a day"
+            onKeyDown={(e) => {
+              if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+              e.preventDefault();
+              const n = mod(i + (e.key === "ArrowRight" ? 1 : -1));
+              go(n);
+              (e.currentTarget.children[n] as HTMLElement | undefined)?.focus();
+            }}
+          >
+            {SCENARIOS.map((x, n) => {
+              const sa = mod(n - k) * STEP; // where this moment sits on screen, after the turn
+              const side = sa === 0 ? "t" : sa === 180 ? "b" : sa < 180 ? "r" : "l";
+              return (
               <button
                 key={x.id}
                 type="button"
                 role="tab"
                 aria-selected={n === i}
-                className="kc-node"
+                tabIndex={n === i ? 0 : -1}
+                className={"kc-node is-" + side}
                 style={{ "--kca": `${n * STEP}deg`, "--kci": n } as CSSProperties}
                 onClick={() => go(n)}
               >
@@ -245,7 +263,8 @@ export default function Coach() {
                   </span>
                 </span>
               </button>
-            ))}
+              );
+            })}
           </div>
 
           <div className="kc-phone">
