@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { GeistSans } from "geist/font/sans";
-import { PALETTE_BOOT } from "@/lib/palette";
 import "./theme.css";
 import "./globals.css";
 import "./sections.css";
@@ -33,9 +32,8 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={GeistSans.variable} data-palette="ember" suppressHydrationWarning>
+    <html lang="en" className={GeistSans.variable}>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: PALETTE_BOOT }} />
         <link rel="preload" href="/fonts/michroma-latin-400-normal.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
       </head>
       <body>{children}</body>

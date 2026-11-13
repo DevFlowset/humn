@@ -1,5 +1,4 @@
-/* Brand tokens. Two palettes: ember (orange to peach, default) and crimson (deep modern red).
-   Switch with ?palette=crimson, or the review toggle at the bottom left. */
+/* Brand tokens: Ember palette (orange to peach). Final, client sign-off 2026-11-13. */
 
 /* Display face. Presicav is the brand font (paid licence, MyFonts / Typodermic).
    To switch it on: put the licensed webfont files in /public/fonts and uncomment the Presicav block.
@@ -10,8 +9,7 @@
 */
 @font-face{font-family:"HUMN Display";src:local("Presicav Regular"),local("Presicav-Regular"),url("/fonts/michroma-latin-400-normal.woff2") format("woff2");font-weight:300 700;font-style:normal;font-display:swap;size-adjust:74%;ascent-override:100%;descent-override:26%}
 
-:root,
-:root[data-palette="ember"]{
+:root{
   --base:#1A0904;--base-rgb:26,9,4;
   --deep:#8A2A0C;--deep-rgb:138,42,12;
   --deep2:#B8380E;
@@ -22,24 +20,6 @@
   --screen:#150804;--screen-rgb:21,8,4;--screen2:#211009;
   --ink-accent:#C2410C;
 }
-:root[data-palette="crimson"]{
-  --base:#120305;--base-rgb:18,3,5;
-  --deep:#6B000C;--deep-rgb:107,0,12;
-  --deep2:#8C0018;
-  --core:#C4002A;--core-rgb:196,0,42;
-  --core-lt:#DA2440;
-  --hi:#FF8590;--hi-rgb:255,133,144;
-  --peach:#FFDADC;--peach2:#FF9EA6;--rose:#EA4A5E;
-  --screen:#120306;--screen-rgb:18,3,6;--screen2:#1D070B;
-  --ink-accent:#C4002A;
-}
 
 .hn-serif,.hn-display{font-family:"HUMN Display","Presicav","Michroma",var(--font-geist-sans),system-ui,sans-serif;font-style:normal;font-weight:400;font-feature-settings:"tnum" 1}
 .hn-serif em,.hn-display em{font-style:normal}
-
-/* Review-only palette switch */
-.pal{position:fixed;left:16px;bottom:16px;z-index:50;display:flex;gap:4px;padding:4px;border-radius:999px;background:rgba(20,10,8,.72);border:1px solid rgba(247,245,242,.14);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);font:500 12px/1 var(--font-geist-sans),system-ui,sans-serif;letter-spacing:-.01em}
-.pal button{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 12px 0 8px;border:0;border-radius:999px;background:transparent;color:rgba(247,245,242,.7);cursor:pointer;transition:background-color 150ms cubic-bezier(0.4,0,0.2,1),color 150ms cubic-bezier(0.4,0,0.2,1),transform 120ms ease-out}
-.pal button:active{transform:scale(.97)}
-.pal button[aria-pressed="true"]{background:rgba(247,245,242,.14);color:#F7F5F2}
-.pal i{width:12px;height:12px;border-radius:50%}

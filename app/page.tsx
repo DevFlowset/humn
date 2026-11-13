@@ -3,7 +3,6 @@ import Features from "@/components/Features";
 import Coach from "@/components/Coach";
 import Trust from "@/components/Trust";
 import Close from "@/components/Close";
-import PaletteToggle from "@/components/PaletteToggle";
 
 export default function Page() {
   return (
@@ -13,7 +12,6 @@ export default function Page() {
       <Coach />
       <Trust />
       <Close />
-      <PaletteToggle />
     </main>
   );
 }
