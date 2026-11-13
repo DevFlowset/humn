@@ -26,11 +26,5 @@ export const orbColors = () => {
   return { uBase: p.coreLt, uDeep: p.rose, uCore: p.peach2, uHigh: p.peach };
 };
 
-/** Statement bars: deep tones only. */
-export const barColors = () => {
-  const p = palette();
-  return { uBase: p.deep, uDeep: p.deep2, uCore: p.core, uHigh: p.coreLt };
-};
-
 /** Inline script for <head>: sets data-palette before first paint. */
 export const PALETTE_BOOT = `(function(){try{var q=new URLSearchParams(location.search).get('palette');var s=q||localStorage.getItem('humn-palette');if(q)localStorage.setItem('humn-palette',q);document.documentElement.dataset.palette=s==='crimson'?'crimson':'ember'}catch(e){document.documentElement.dataset.palette='ember'}})()`;

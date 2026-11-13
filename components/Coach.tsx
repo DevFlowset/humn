@@ -178,7 +178,7 @@ export default function Coach() {
         <h2 id="kc-h" className="hn-display kc-h">
           One coach.
           <br />
-          <em>Every kind of day.</em>
+          <em>Any time, any day.</em>
         </h2>
         <p className="kc-p">HUMN reads your watch, your calendar and how you feel, then picks the right move. Warm when you need it. Tough when you ask for it.</p>
       </div>
