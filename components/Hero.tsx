@@ -2,17 +2,19 @@
 
 import { useEffect, useRef, useState, type CSSProperties, type FormEvent, type KeyboardEvent } from "react";
 import Logo from "./Logo";
-import Phone from "./Phone";
+import ChatPhone from "./ChatPhone";
+import { HERO } from "@/lib/scripts";
 import WaveLabel from "./WaveLabel";
 import { createAura } from "@/lib/aura";
 import { mag } from "@/lib/interactions";
+import { fieldColors } from "@/lib/palette";
 
 const LINKS = [
   { href: "#posture", label: "Posture" },
   { href: "#movement", label: "Movement" },
   { href: "#coaching", label: "Coaching" },
   { href: "#food", label: "Food" },
-  { href: "#faq", label: "FAQ" },
+  { href: "#coach", label: "Your coach" },
 ];
 
 type FormState = "idle" | "loading" | "success" | "error";
@@ -41,10 +43,7 @@ export default function Hero() {
         speed: 1,
         uScale: 1,
         uGrain: 0.07,
-        uBase: "#19090E",
-        uDeep: "#571522",
-        uCore: "#AE3443",
-        uHigh: "#E58A86",
+        ...fieldColors(),
         uPull: 0.3,
         uCalm: 1 - 340 / h,
         uStretch: h / 900,
@@ -81,7 +80,7 @@ export default function Hero() {
         ref={canvasRef}
         className="hero-canvas"
         role="img"
-        aria-label="Slow red and rose light that bends around the pointer"
+        aria-label="Slow orange and peach light that bends around the pointer"
       />
 
       <div className="nav-wrap hero-nav-wrap" onKeyDown={onKey}>
@@ -131,12 +130,11 @@ export default function Hero() {
 
       <div id="top" className="hero-top">
         <h1 className="hn-serif rise hero-h1">
-          <span>Feel at home</span>
-          <em>in your body.</em>
+          <span>Your body,</span>
+          <em>updated.</em>
         </h1>
         <p className="hn-ui rise hero-p">
-          HUMN reads your posture, plans your movement, coaches you every day and helps you eat well. One app, one
-          calm routine.
+          Scan your body. Meet your coach. Watch yourself level up.
         </p>
         <form id="waitlist" className="rise hero-form" onSubmit={submit} noValidate={false}>
           <div className="form-row">
@@ -176,7 +174,9 @@ export default function Hero() {
         </p>
       </div>
 
-      <Phone />
+      <div className="stage">
+        <ChatPhone script={HERO} loop float label="HUMN app: your coach checks in, starts small and cheers you on" />
+      </div>
     </div>
   );
 }

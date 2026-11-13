@@ -1,28 +1,31 @@
 import type { Metadata, Viewport } from "next";
 import { GeistSans } from "geist/font/sans";
+import { PALETTE_BOOT } from "@/lib/palette";
+import "./theme.css";
 import "./globals.css";
 import "./sections.css";
+import "./coach.css";
 import "./close.css";
 import "./compact.css";
+import "./v2.css";
 
 const site = process.env.NEXT_PUBLIC_SITE_URL || "https://humn.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site),
-  title: "HUMN — Feel at home in your body",
-  description:
-    "HUMN reads your posture, plans your movement, coaches you every day and helps you eat well. One app, one calm routine. Join the waitlist.",
+  title: "HUMN — Your body, updated.",
+  description: "Scan your body. Meet your coach. Watch yourself level up. Be first to install v2.0 of you.",
   openGraph: {
-    title: "HUMN — Feel at home in your body",
-    description: "One app for posture, movement, coaching and food. Join the waitlist.",
+    title: "HUMN — Your body, updated.",
+    description: "Scan your body. Meet your coach. Watch yourself level up.",
     type: "website",
     siteName: "HUMN",
   },
-  twitter: { card: "summary_large_image", title: "HUMN — Feel at home in your body" },
+  twitter: { card: "summary_large_image", title: "HUMN — Your body, updated." },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#19090E",
+  themeColor: "#1A0904",
   colorScheme: "dark",
   width: "device-width",
   initialScale: 1,
@@ -30,10 +33,10 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={GeistSans.variable}>
+    <html lang="en" className={GeistSans.variable} data-palette="ember" suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://use.typekit.net" crossOrigin="anonymous" />
-        <link rel="stylesheet" href="https://use.typekit.net/jjd4sjm.css" />
+        <script dangerouslySetInnerHTML={{ __html: PALETTE_BOOT }} />
+        <link rel="preload" href="/fonts/michroma-latin-400-normal.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
       </head>
       <body>{children}</body>
     </html>

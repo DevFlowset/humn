@@ -52,3 +52,10 @@ Deploy: import repo on Vercel, preset **Next.js**, root `./`, defaults.
 | `NEXT_PUBLIC_SITE_URL` | Canonical URL for metadata (default `https://humn.app`). |
 
 Kepler Std Display loads from Adobe Fonts kit `jjd4sjm`. Add the production domain to the kit's allowed domains.
+
+## v2 (branch `feedback-v2`, client notes 2026-11-13)
+
+- Palette: Ember (orange to peach, default) and Crimson (`#6B000C` / `#C4002A`). Tokens in `app/theme.css`, shader colours in `lib/palette.ts`. Preview with `?palette=crimson` or the toggle bottom left (review only, remove `<PaletteToggle />` before launch).
+- Display font: Presicav slot. Michroma (OFL, `public/fonts`) stands in until the licensed Presicav webfont goes in `public/fonts` (see the commented `@font-face` in `app/theme.css`). Metrics use the display face.
+- Copy: "Your body, updated." hero, feature taglines, "Be first to install v2.0 of you." close.
+- Phone chats are scripts in `lib/scripts.ts`, played by `components/ChatPhone.tsx`. New `#coach` section: 6 scenarios, Supportive / Tough love where written.

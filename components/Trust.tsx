@@ -3,8 +3,9 @@
 import { useEffect, useRef, type CSSProperties } from "react";
 import { createAura } from "@/lib/aura";
 import { fit, watch } from "@/lib/reveal";
+import { orbColors } from "@/lib/palette";
 
-const ORB = { speed: 0.55, uScale: 0.75, uGrain: 0.02, uBase: "#C24A56", uDeep: "#DB6A72", uCore: "#EB9A93", uHigh: "#F8CFC7", uPull: 0.25, uCalm: -4, uStretch: 1 };
+const ORB = () => ({ speed: 0.55, uScale: 0.75, uGrain: 0.02, ...orbColors(), uPull: 0.25, uCalm: -4, uStretch: 1 });
 
 /** Trust: a photo goes in, a few numbers come out. Wires draw, the orb wakes, then the photo gets its overlay. Plays once. */
 export default function Trust() {
@@ -16,7 +17,7 @@ export default function Trust() {
   useEffect(() => {
     const el = tr.current;
     if (!el) return;
-    const aura = createAura(orb.current, () => ORB);
+    const aura = createAura(orb.current, ORB);
     const off = [watch(tra.current, el, "tgo", 0.45), watch(row.current, el, "rgo", 0.6), watch(el.querySelector(".t-pr"), el, "pgo", 0.5), fit(el)];
     return () => {
       aura.stop();

@@ -1,0 +1,37 @@
+/* v2 overrides (client feedback 2026-11-13): wide display face, new taglines, metrics as data. */
+
+.logo{display:inline-block;color:#F7F5F2;line-height:1;letter-spacing:.06em;white-space:nowrap}
+.ft-logo .logo{font-size:15px}
+a:has(>.logo),.ft-logo{text-decoration:none}
+
+.hero-h1{font-weight:400;font-size:clamp(38px,5.6vw,80px);line-height:1.04;letter-spacing:-.035em}
+.hero-h1 em{font-style:normal;color:var(--hi)}
+.hero-p{font-size:17px;letter-spacing:-.02em;max-width:420px}
+
+.st-p,.fx-h,.tr-h,.cl-h{letter-spacing:-.035em}
+.cl-h{font-weight:400}
+.cl-l.tv-it{font-style:normal}
+
+.col-k{margin:0 0 12px}
+.col-h{font-size:22px;line-height:1.2;letter-spacing:-.025em}
+.col-h span{text-wrap:balance}
+.fx.fgo .col-k{animation:fxin 800ms cubic-bezier(0.22,1,0.36,1) both;animation-delay:calc(2440ms + var(--c) * 140ms)}
+.fx:not(.fgo) .col-k{opacity:0}
+
+/* Display face wins over the old Kepler rule in globals.css */
+.hn-serif,.hn-display{font-family:"HUMN Display","Presicav","Michroma",var(--font-geist-sans),system-ui,sans-serif;font-style:normal;font-weight:400}
+.hn-serif em,.hn-display em{font-style:normal}
+
+/* Numbers read like data */
+.pv-h em,.mt small,.dpt small,.n-tk + b,.pv-meal small,.dt,.t-rd b,.deg,.num,.hd-r{font-family:"HUMN Display","Presicav","Michroma",var(--font-geist-sans),sans-serif;font-style:normal;letter-spacing:-.01em}
+.t-rd b{letter-spacing:-.03em}
+
+/* Giant cropped wordmark, set in the display face */
+.wm-t{display:block;width:100%;text-align:center;font-size:min(26.5vw,372px);line-height:1;letter-spacing:-.02em;translate:0 10%;color:transparent;background:linear-gradient(180deg,rgba(247,245,242,.6) 0%,rgba(247,245,242,.22) 60%,rgba(247,245,242,0) 95%);-webkit-background-clip:text;background-clip:text;white-space:nowrap}
+.cl:not(.cgo) .wm-t{opacity:0}
+.cl.cgo .wm-t{animation:tc-wmrise 1600ms cubic-bezier(0.22,1,0.36,1) 700ms both}
+
+@media (max-width:1100px){
+  .col-h{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){.cl .wm-t,.fx .col-k{opacity:1 !important;animation:none !important}}
