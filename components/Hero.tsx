@@ -175,7 +175,7 @@ export default function Hero() {
       </div>
 
       <div className="stage">
-        <ChatPhone script={HERO} loop float label="HUMN app: your coach checks in, starts small and cheers you on" />
+        <ChatPhone script={HERO} loop float label="HUMN app: you have 30 minutes, your coach squeezes in a 20-minute ab set and counts with you" />
       </div>
     </div>
   );

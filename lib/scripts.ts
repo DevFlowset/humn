@@ -8,16 +8,17 @@ export type Step =
   | { t: "note"; text: string }
   | { t: "card"; card: Card };
 
+/** Hero phone: "Charged and ready" (client 2026-11-13: stronger, relates to people squeezing in a quick win). */
 export const HERO: Step[] = [
-  { t: "coach", text: "Good morning! Ready to move?" },
-  { t: "you", text: "Honestly? Not feeling it." },
-  { t: "coach", text: "That’s fair. Let’s start small. Ten seconds, shoulders down, one deep breath." },
-  { t: "you", text: "Done." },
+  { t: "coach", text: "Good morning! What are you up to today?" },
+  { t: "you", text: "I’ve only got about 30 minutes." },
   {
     t: "coach",
-    text: "See? You showed up. That’s the hard part. Now give me ten heel raises. I’ll count, you stand tall. You’ve got more in you than you think.",
-    tag: "Posture today · better than Monday",
+    text: "That’s plenty! Let’s squeeze in a 20-minute ab set. Won’t take us longer than that.",
+    replies: ["Quick run", "20-minute ab set", "Maybe later"],
   },
+  { t: "you", text: "Ab set. Let’s do it." },
+  { t: "coach", text: "Let’s gooooo! Grab your mat. I’ll start your playlist and I’ll count with you." },
 ];
 
 export type Signal = { icon: "watch" | "calendar" | "camera" | "scan" | "pin"; source: string; lines: [string, string] };
@@ -35,22 +36,22 @@ export type Scenario = {
 
 export const SCENARIOS: Scenario[] = [
   {
-    id: "charged",
-    time: "06:40",
-    signal: { icon: "watch", source: "Watch", lines: ["Sleep: deep", "Recovery: strong"] },
-    title: "Charged and ready",
-    trigger: "Your watch shows good sleep and strong recovery.",
-    mode: "Hype",
+    id: "low",
+    time: "06:50",
+    signal: { icon: "watch", source: "Morning check-in", lines: ["Motivation: low", "Posture: better than Monday"] },
+    title: "Not feeling it",
+    trigger: "You don’t feel like moving today.",
+    mode: "Supportive",
     script: [
-      { t: "coach", text: "Good morning! What are you up to today?" },
-      { t: "you", text: "I’ve only got about 30 minutes." },
+      { t: "coach", text: "Good morning! Ready to move?" },
+      { t: "you", text: "Honestly? Not feeling it." },
+      { t: "coach", text: "That’s fair. Let’s start small. Ten seconds, shoulders down, one deep breath." },
+      { t: "you", text: "Done." },
       {
         t: "coach",
-        text: "That’s plenty! Let’s squeeze in a 20-minute ab set. Won’t take us longer than that.",
-        replies: ["Quick run", "20-minute ab set", "Maybe later"],
+        text: "See? You showed up. That’s the hard part. Now give me ten heel raises. I’ll count, you stand tall. You’ve got more in you than you think.",
+        tag: "Posture today · better than Monday",
       },
-      { t: "you", text: "Ab set. Let’s do it." },
-      { t: "coach", text: "Let’s gooooo! Grab your mat. I’ll start your playlist and I’ll count with you." },
     ],
   },
   {
