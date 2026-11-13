@@ -1,4 +1,5 @@
 import Logo from "./Logo";
+import Year from "./Year";
 
 export type LegalSection = { h: string; body: React.ReactNode };
 
@@ -36,7 +37,7 @@ export default function Legal({ kicker, title, updated, intro, sections }: { kic
       <footer className="lgl-ft">
         <a href="/privacy">Privacy</a>
         <a href="/terms">Terms</a>
-        <span>© 2026 HUMN</span>
+        <span>© <Year /> HUMN</span>
       </footer>
     </main>
   );

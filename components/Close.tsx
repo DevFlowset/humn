@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from "react";
 import WaveLabel from "./WaveLabel";
 import Logo from "./Logo";
+import Year from "./Year";
 import { createAura } from "@/lib/aura";
 import { mag } from "@/lib/interactions";
 import { watch } from "@/lib/reveal";
@@ -89,6 +90,6 @@ export default function Close() {
                   <WaveLabel text="Join the waitlist" />
                 </button>
               </div>
-            </form>{" "}<p id="cl-note" className="cl-note" data-state={state} role="status" aria-live="polite">{NOTE[state]}</p>{" "}</div>{" "}<footer className="ft"><div className="ft-in">{" "}<a className="ft-logo" href="#top" aria-label="HUMN home"><Logo /></a>{" "}<nav className="ft-nav" aria-label="Footer"><a href="#posture">Posture</a><a href="#movement">Movement</a><a href="#coaching">Coaching</a><a href="#food">Food</a></nav>{" "}<p className="ft-legal"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><span>© 2026 HUMN</span></p>{" "}</div></footer>{" "}<div className="wm" aria-hidden="true"><span className="wm-t hn-display">HUMN</span></div>{" "}</section>
+            </form>{" "}<p id="cl-note" className="cl-note" data-state={state} role="status" aria-live="polite">{NOTE[state]}</p>{" "}</div>{" "}<footer className="ft"><div className="ft-in">{" "}<a className="ft-logo" href="#top" aria-label="HUMN home"><Logo /></a>{" "}<nav className="ft-nav" aria-label="Footer"><a href="#posture">Posture</a><a href="#movement">Movement</a><a href="#coaching">Coaching</a><a href="#food">Food</a></nav>{" "}<p className="ft-legal"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><span>© <Year /> HUMN</span></p>{" "}</div></footer>{" "}<div className="wm" aria-hidden="true"><span className="wm-t hn-display">HUMN</span></div>{" "}</section>
   );
 }
