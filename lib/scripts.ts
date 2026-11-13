@@ -20,8 +20,12 @@ export const HERO: Step[] = [
   },
 ];
 
+export type Signal = { icon: "watch" | "calendar" | "camera" | "scan" | "pin"; source: string; lines: [string, string] };
+
 export type Scenario = {
   id: string;
+  time: string;
+  signal: Signal;
   title: string;
   trigger: string;
   mode: string;
@@ -32,6 +36,8 @@ export type Scenario = {
 export const SCENARIOS: Scenario[] = [
   {
     id: "charged",
+    time: "06:40",
+    signal: { icon: "watch", source: "Watch", lines: ["Sleep: deep", "Recovery: strong"] },
     title: "Charged and ready",
     trigger: "Your watch shows good sleep and strong recovery.",
     mode: "Hype",
@@ -49,6 +55,8 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     id: "tired",
+    time: "07:15",
+    signal: { icon: "watch", source: "Watch + check-in", lines: ["Sleep: short night", "Feeling: tired"] },
     title: "Running on empty",
     trigger: "Daily check-in after a short night.",
     mode: "Safe space",
@@ -65,6 +73,8 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     id: "slammed",
+    time: "09:30",
+    signal: { icon: "calendar", source: "Calendar", lines: ["Back-to-back meetings", "Workout slot: gone"] },
     title: "Slammed day",
     trigger: "No time for a workout.",
     mode: "Supportive",
@@ -82,6 +92,8 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     id: "form",
+    time: "18:10",
+    signal: { icon: "camera", source: "Camera", lines: ["Live form tracking", "Wall angels, set 1"] },
     title: "Live form check",
     trigger: "Mid-workout, camera on.",
     mode: "Supportive",
@@ -104,6 +116,8 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     id: "rescan",
+    time: "Day 28",
+    signal: { icon: "scan", source: "Body scan", lines: ["Four weeks in", "Re-scan due"] },
     title: "Four-week re-scan",
     trigger: "Your scheduled check-in.",
     mode: "Supportive",
@@ -129,6 +143,8 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     id: "hotel",
+    time: "21:05",
+    signal: { icon: "pin", source: "Location", lines: ["Hotel, no gym", "Sam is free"] },
     title: "Hotel room, with a buddy",
     trigger: "Travelling, no gym.",
     mode: "Supportive",

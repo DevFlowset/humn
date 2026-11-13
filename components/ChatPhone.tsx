@@ -131,6 +131,18 @@ function CardView({ card }: { card: Card }) {
   );
 }
 
+/** Total ms a script takes to play (matches the timeline in ChatPhone). */
+export function scriptDuration(script: Step[]) {
+  let t = 700;
+  for (const s of script) {
+    if (s.t === "coach") t += Math.min(1700, 650 + s.text.length * 9) + Math.min(2600, 900 + s.text.length * 22) + (s.replies ? 900 : 0) + (s.tag ? 700 : 0);
+    else if (s.t === "you") t += 220 + s.text.length * 42 + 560 + 1100;
+    else if (s.t === "note") t += 1500;
+    else t += 2600;
+  }
+  return t + 1600;
+}
+
 /** Phone mockup that plays a chat script: coach typing, your composer typing, cards, notes. */
 export default function ChatPhone({ script, runKey = "", loop = false, float = false, badge = "Day 12", label, onDone }: Props) {
   const root = useRef<HTMLDivElement>(null);

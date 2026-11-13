@@ -35,3 +35,6 @@ a:has(>.logo),.ft-logo{text-decoration:none}
   .col-h{font-size:24px}
 }
 @media (prefers-reduced-motion:reduce){.cl .wm-t,.fx .col-k{opacity:1 !important;animation:none !important}}
+
+.kc + .tr{padding-top:88px}
+@media (max-width:1100px){.kc + .tr{padding-top:72px}}
